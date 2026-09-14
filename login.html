@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Login & Sign Up</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            font-family: Arial, sans-serif;
+
+            background: #f2efff;
+
+            overflow: hidden;
+        }
+
+
+        /* Background decoration */
+
+        body::before {
+            content: "";
+
+            position: fixed;
+
+            width: 350px;
+            height: 350px;
+
+            background: #dcd3ff;
+
+            border-radius: 50%;
+
+            top: -120px;
+            left: -100px;
+
+            filter: blur(10px);
+
+            opacity: .7;
+        }
+
+
+        body::after {
+            content: "";
+
+            position: fixed;
+
+            width: 300px;
+            height: 300px;
+
+            background: #ffd8e9;
+
+            border-radius: 50%;
+
+            bottom: -120px;
+            right: -80px;
+
+            filter: blur(10px);
+
+            opacity: .7;
+        }
+
+
+        /* MAIN CARD */
+
+        .p1 {
+            position: relative;
+
+            width: 1200px;
+            height: 800px;
+
+            background: white;
+
+            border-radius: 30px;
+
+            overflow: hidden;
+
+            box-shadow:
+                0 25px 70px rgba(55, 40, 100, .18);
+
+            animation: show .8s ease;
+        }
+
+
+        /* TOGGLE */
+
+        .p2 {
+            display: none;
+        }
+
+
+        /* PURPLE PANEL */
+
+        .p3 {
+            position: absolute;
+
+            z-index: 5;
+
+            width: 50%;
+            height: 100%;
+
+            left: 0;
+            top: 0;
+
+            /* background:
+                linear-gradient(
+                    145deg,
+                    #6952ff,
+                    #875cff,
+                    #b36cff
+                ); */
+
+            background-image: url(hero.jpg);
+
+            transition: .8s cubic-bezier(.77, 0, .18, 1);
+
+            overflow: hidden;
+        }
+
+
+        /* PANEL CIRCLES */
+
+        .p3::before {
+            content: "";
+
+            position: absolute;
+
+            width: 300px;
+            height: 300px;
+
+            border-radius: 50%;
+
+            border: 2px solid rgba(255, 255, 255, .15);
+
+            top: -100px;
+            right: -100px;
+        }
+
+
+        .p3::after {
+            content: "";
+
+            position: absolute;
+
+            width: 220px;
+            height: 220px;
+
+            border-radius: 50%;
+
+            border: 2px solid rgba(255, 255, 255, .12);
+
+            bottom: -90px;
+            left: -90px;
+        }
+
+
+        /* PANEL MOVE */
+
+        .p2:checked~.p3 {
+            transform: translateX(100%);
+        }
+
+
+        /* WELCOME */
+
+        .p4 {
+            position: absolute;
+
+            z-index: 6;
+
+            width: 50%;
+            height: 100%;
+
+            top: 0;
+
+            display: flex;
+
+            flex-direction: column;
+
+            justify-content: center;
+
+            align-items: center;
+
+            text-align: center;
+
+            padding: 50px;
+
+            color: white;
+
+            transition: .7s ease;
+        }
+
+
+        /* LOGIN WELCOME */
+
+        .p4.p5 {
+            left: 0;
+
+            opacity: 1;
+
+            transform: translateX(0);
+        }
+
+
+        /* SIGNUP WELCOME */
+
+        .p4.p6 {
+            left: 50%;
+
+            opacity: 0;
+
+            transform: translateX(60%);
+        }
+
+
+        /* WELCOME CHANGE */
+
+        .p2:checked~.p4.p5 {
+            opacity: 0;
+
+            transform: translateX(-60%);
+        }
+
+
+        .p2:checked~.p4.p6 {
+            opacity: 1;
+
+            transform: translateX(0);
+        }
+
+
+        /* ICON */
+
+        .p4::before {
+            content: "✦";
+
+            width: 75px;
+            height: 75px;
+
+            display: flex;
+
+            justify-content: center;
+            align-items: center;
+
+            margin-bottom: 25px;
+
+            border-radius: 50%;
+
+            background: rgba(255, 255, 255, .14);
+
+            border: 1px solid rgba(255, 255, 255, .3);
+
+            font-size: 35px;
+
+            animation: rotate 4s infinite ease-in-out;
+        }
+
+
+
+        /* WELCOME TITLE */
+
+        .p4 h1 {
+            font-size: 48px;
+
+            margin-bottom: 20px;
+
+            letter-spacing: -1px;
+        }
+
+
+        /* WELCOME TEXT */
+
+        .p4 p {
+            font-size: 20px;
+
+            line-height: 1.6;
+
+            max-width: 360px;
+
+            margin-bottom: 35px;
+
+            color: rgba(255, 255, 255, .9);
+        }
+
+
+        /* SWITCH BUTTON */
+
+        .p4 label {
+            padding: 16px 38px;
+
+            border: 2px solid white;
+
+            border-radius: 50px;
+
+            font-size: 16px;
+
+            font-weight: bold;
+
+            letter-spacing: 1px;
+
+            cursor: pointer;
+
+            transition: .3s;
+        }
+
+
+        .p4 label:hover {
+            background: white;
+
+            color: #7457ff;
+
+            transform: translateY(-4px);
+
+            box-shadow: 0 12px 25px rgba(0, 0, 0, .15);
+        }
+
+
+        /* FORM */
+
+        .p7 {
+            position: absolute;
+
+            width: 50%;
+            height: 100%;
+
+            top: 0;
+
+            display: flex;
+
+            flex-direction: column;
+
+            justify-content: center;
+
+            padding: 70px;
+
+            transition: .7s ease;
+        }
+
+
+        /* LOGIN FORM */
+
+        .p7.p5 {
+            left: 50%;
+
+            opacity: 1;
+
+            transform: translateX(0);
+        }
+
+
+        /* SIGNUP FORM */
+
+        .p7.p6 {
+            left: 0;
+
+            opacity: 0;
+
+            transform: translateX(-60%);
+        }
+
+
+        /* FORM CHANGE */
+
+        .p2:checked~.p7.p5 {
+            opacity: 0;
+
+            transform: translateX(60%);
+        }
+
+
+        .p2:checked~.p7.p6 {
+            opacity: 1;
+
+            transform: translateX(0);
+        }
+
+
+        /* FORM TITLE */
+
+        .p7 h1 {
+            font-size: 46px;
+
+            color: #282332;
+
+            margin-bottom: 10px;
+        }
+
+
+        /* FORM SUBTITLE */
+
+        .p7 h3 {
+            font-size: 17px;
+
+            font-weight: normal;
+
+            color: #999;
+
+            margin-bottom: 35px;
+        }
+
+
+        /* INPUT */
+
+        .p7 input {
+            width: 100%;
+
+            height: 60px;
+
+            padding: 0 20px;
+
+            margin-bottom: 18px;
+
+            border: 2px solid #eeeaf5;
+
+            border-radius: 13px;
+
+            background: #faf9fc;
+
+            outline: none;
+
+            font-size: 18px;
+
+            transition: .3s;
+        }
+
+
+        .p7 input:focus {
+            background: white;
+
+            border-color: #7959ff;
+
+            box-shadow:
+                0 0 0 4px rgba(121, 89, 255, .1);
+
+            transform: translateY(-2px);
+        }
+
+
+        /* BUTTON */
+
+        .p7 button {
+            width: 100%;
+
+            height: 60px;
+
+            margin-top: 10px;
+
+            border: none;
+
+            border-radius: 13px;
+
+            /* background:
+                linear-gradient(
+                    135deg,
+                    #7054ff,
+                    #a45cff
+                ); */
+            background: linear-gradient(90deg,
+                    #ff4f81,
+                    #7657ff,
+                    #00a8ff,
+                    #00b894,
+                    #e84393,
+                    #ff4f81);
+
+            background-size: 400% 100%;
+
+            animation: buttonColor 8s infinite linear;
+
+            transition: 0.3s ease;
+
+            @keyframes buttonColor {
+
+                0% {
+                    background-position: 0% 50%;
+                }
+
+                50% {
+                    background-position: 100% 50%;
+                }
+
+                100% {
+                    background-position: 0% 50%;
+                }
+
+            }
+
+
+            color: white;
+
+            font-size: 19px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            transition: .3s;
+
+            box-shadow: 0 10px 25px rgba(112, 84, 255, .25);
+        }
+
+
+        .p7 button:hover {
+            transform: translateY(-4px);
+
+            box-shadow:
+                0 15px 30px rgba(112, 84, 255, .35);
+        }
+
+        /* CLICK */
+
+        .p7 button:active {
+            transform: scale(0.96);
+        }
+
+
+        /* BOTTOM TEXT */
+
+        .p8 {
+            text-align: center;
+
+            margin-top: 20px;
+
+            font-size: 16px;
+
+            color: #999;
+        }
+
+        /* ===============================
+   BACKGROUND BLUR OVERLAY
+================================ */
+
+.blur-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+
+    background: rgba(255, 255, 255, 0.08);
+
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+
+    z-index: 9998;
+
+    opacity: 0;
+    pointer-events: none;
+
+    transition: 0.4s ease;
+}
+
+.blur-overlay.show {
+    opacity: 1;
+    pointer-events: all;
+}
+
+
+/* ===============================
+   SUCCESS POPUP
+================================ */
+
+.success-popup {
+    position: fixed;
+
+    top: 50%;
+    left: 50%;
+
+    width: 420px;
+
+    padding: 45px 35px;
+
+    background: white;
+
+    border-radius: 25px;
+
+    text-align: center;
+
+    z-index: 99999;
+
+    opacity: 0;
+
+    transform: translate(-50%, -50%) scale(0.6);
+
+    transition: 0.4s ease;
+
+    box-shadow: 0 25px 70px rgba(0, 0, 0, 0.30);
+}
+
+.success-popup.show {
+    opacity: 1;
+
+    transform: translate(-50%, -50%) scale(1);
+}
+
+
+/* ===============================
+   GREEN CHECK
+================================ */
+
+.success-icon {
+    width: 80px;
+    height: 80px;
+
+    margin: 0 auto 20px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background: #22c55e;
+
+    color: white;
+
+    border-radius: 50%;
+
+    font-size: 45px;
+    font-weight: bold;
+
+    animation:
+        tickAnimation 0.7s ease,
+        greenGlow 1.5s infinite;
+}
+
+
+/* ===============================
+   POPUP TITLE
+================================ */
+
+.success-popup h2 {
+    font-size: 28px;
+
+    color: #292333;
+
+    margin-bottom: 12px;
+}
+
+
+/* ===============================
+   POPUP TEXT
+================================ */
+
+.success-popup p {
+    font-size: 17px;
+
+    color: #888;
+
+    line-height: 1.6;
+
+    margin-bottom: 25px;
+}
+
+
+/* ===============================
+   OK BUTTON
+================================ */
+
+.close-popup {
+    border: none;
+
+    padding: 13px 40px;
+
+    border-radius: 12px;
+
+    background: #22c55e;
+
+    color: white;
+
+    font-size: 17px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: 0.3s ease;
+}
+
+.close-popup:hover {
+    transform: translateY(-3px);
+
+    box-shadow:
+        0 10px 25px
+        rgba(34, 197, 94, 0.35);
+}
+
+.close-popup:active {
+    transform: scale(0.94);
+}
+
+
+/* ===============================
+   CHECK ANIMATION
+================================ */
+
+@keyframes tickAnimation {
+
+    0% {
+        transform: scale(0) rotate(-45deg);
+    }
+
+    60% {
+        transform: scale(1.15) rotate(10deg);
+    }
+
+    100% {
+        transform: scale(1) rotate(0);
+    }
+
+}
+
+
+/* ===============================
+   GREEN GLOW
+================================ */
+
+@keyframes greenGlow {
+
+    0%, 100% {
+        box-shadow:
+            0 0 0 0
+            rgba(34, 197, 94, 0.4);
+    }
+
+    50% {
+        box-shadow:
+            0 0 0 15px
+            rgba(34, 197, 94, 0);
+    }
+
+}
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <div class="p1">
+
+
+        <!-- TOGGLE -->
+
+        <input type="checkbox" id="m1" class="p2">
+
+
+        <!-- PURPLE PANEL -->
+
+        <div class="p3"></div>
+
+
+        <!-- LOGIN WELCOME -->
+
+        <div class="p4 p5">
+
+            <h1>Welcome Back! 👋</h1>
+
+            <p>
+                Login to your account
+                and continue where you left off.
+            </p>
+
+            <label for="m1">
+                CREATE ACCOUNT
+            </label>
+
+        </div>
+
+
+        <!-- SIGN UP WELCOME -->
+
+        <div class="p4 p6">
+
+            <h1>Hello There! ✨</h1>
+
+            <p>
+                Create a new account
+                and start your journey with us.
+            </p>
+
+            <label for="m1">
+                LOGIN
+            </label>
+
+        </div>
+
+
+        <!-- LOGIN FORM -->
+
+        <div class="p7 p5">
+
+            <h1>Login</h1>
+
+            <h3>
+                Enter your details to continue
+            </h3>
+
+            <form>
+
+                <input type="email" placeholder="Email Address" required>
+
+                <input type="password" placeholder="Password" required>
+
+                <button type="submit">
+                    LOGIN
+                </button>
+
+            </form>
+
+            <div class="p8">
+                Welcome back to your account ♡
+            </div>
+
+        </div>
+
+
+        <!-- SIGN UP FORM -->
+
+        <div class="p7 p6">
+
+            <h1>Create Account</h1>
+
+            <h3>
+                Fill in your details to get started
+            </h3>
+
+            <form>
+
+                <input type="text" placeholder="Full Name" required>
+
+                <input type="email" placeholder="Email Address" required>
+
+                <input type="password" placeholder="Create Password" required>
+
+                <button type="submit">
+                    CREATE ACCOUNT
+                </button>
+
+            </form>
+
+            <div class="p8">
+                Let's create something amazing ✨
+            </div>
+
+        </div>
+
+
+    </div>
+
+<script src="script.js"></script>
+</body>
+
+</html>

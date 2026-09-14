@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Calculator</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #141e30, #243b55);
+            padding: 20px;
+        }
+
+        .calculator {
+            width: 360px;
+            max-width: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 25px;
+            padding: 20px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+        }
+
+        .top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: white;
+            margin-bottom: 15px;
+        }
+
+        .top h2 {
+            font-size: 20px;
+        }
+
+        .theme {
+            border: none;
+            background: rgba(255,255,255,0.15);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        .display {
+            background: rgba(0,0,0,0.3);
+            border-radius: 18px;
+            padding: 20px;
+            margin-bottom: 15px;
+            text-align: right;
+            color: white;
+            min-height: 105px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            overflow: hidden;
+        }
+
+        #expression {
+            font-size: 18px;
+            color: #aaa;
+            min-height: 25px;
+        }
+
+        #result {
+            font-size: 38px;
+            font-weight: bold;
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+
+        button {
+            height: 65px;
+            border: none;
+            border-radius: 16px;
+            font-size: 20px;
+            cursor: pointer;
+            color: white;
+            background: rgba(255,255,255,0.12);
+            transition: 0.15s;
+        }
+
+        button:hover {
+            background: rgba(255,255,255,0.22);
+            transform: translateY(-2px);
+        }
+
+        button:active {
+            transform: scale(0.94);
+        }
+
+        .operator {
+            background: #ff9500;
+        }
+
+        .operator:hover {
+            background: #ffad32;
+        }
+
+        .clear {
+            background: #e63946;
+        }
+
+        .equal {
+            background: #22c55e;
+        }
+
+        .zero {
+            grid-column: span 2;
+        }
+
+        .history {
+            margin-top: 20px;
+            color: white;
+        }
+
+        .history-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .history-header h3 {
+            font-size: 16px;
+        }
+
+        .clear-history {
+            height: auto;
+            padding: 6px 10px;
+            font-size: 12px;
+            background: rgba(255,255,255,0.1);
+        }
+
+        #historyList {
+            max-height: 120px;
+            overflow-y: auto;
+        }
+
+        .history-item {
+            background: rgba(255,255,255,0.08);
+            padding: 9px 12px;
+            border-radius: 10px;
+            margin-bottom: 6px;
+            font-size: 14px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        /* Light Mode */
+        body.light {
+            background: linear-gradient(135deg, #e0eafc, #cfdef3);
+        }
+
+        body.light .calculator {
+            background: rgba(255,255,255,0.55);
+            border-color: rgba(0,0,0,0.1);
+        }
+
+        body.light .top,
+        body.light button,
+        body.light .history {
+            color: #222;
+        }
+
+        body.light .display {
+            background: rgba(255,255,255,0.6);
+            color: #111;
+        }
+
+        body.light #expression {
+            color: #666;
+        }
+
+        body.light button {
+            background: rgba(0,0,0,0.08);
+        }
+
+        body.light button:hover {
+            background: rgba(0,0,0,0.14);
+        }
+
+        body.light .operator,
+        body.light .clear,
+        body.light .equal {
+            color: white;
+        }
+
+        @media (max-width: 400px) {
+            .calculator {
+                padding: 15px;
+            }
+
+            button {
+                height: 58px;
+            }
+
+            #result {
+                font-size: 32px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="calculator">
+
+    <div class="top">
+        <h2>Smart Calculator</h2>
+        <button class="theme" onclick="toggleTheme()">☀</button>
+    </div>
+
+    <div class="display">
+        <div id="expression"></div>
+        <div id="result">0</div>
+    </div>
+
+    <div class="buttons">
+
+        <button class="clear" onclick="clearCalculator()">AC</button>
+        <button onclick="deleteLast()">⌫</button>
+        <button onclick="percentage()">%</button>
+        <button class="operator" onclick="addOperator('/')">÷</button>
+
+        <button onclick="addNumber('7')">7</button>
+        <button onclick="addNumber('8')">8</button>
+        <button onclick="addNumber('9')">9</button>
+        <button class="operator" onclick="addOperator('*')">×</button>
+
+        <button onclick="addNumber('4')">4</button>
+        <button onclick="addNumber('5')">5</button>
+        <button onclick="addNumber('6')">6</button>
+        <button class="operator" onclick="addOperator('-')">−</button>
+
+        <button onclick="addNumber('1')">1</button>
+        <button onclick="addNumber('2')">2</button>
+        <button onclick="addNumber('3')">3</button>
+        <button class="operator" onclick="addOperator('+')">+</button>
+
+        <button class="zero" onclick="addNumber('0')">0</button>
+        <button onclick="addDecimal()">.</button>
+        <button class="equal" onclick="calculate()">=</button>
+
+    </div>
+
+    <div class="history">
+        <div class="history-header">
+            <h3>Calculation History</h3>
+            <button class="clear-history" onclick="clearHistory()">Clear</button>
+        </div>
+
+        <div id="historyList"></div>
+    </div>
+
+</div>
+
+<script>
+
+    let currentInput = "";
+    let expression = "";
+
+    const resultDisplay = document.getElementById("result");
+    const expressionDisplay = document.getElementById("expression");
+    const historyList = document.getElementById("historyList");
+
+    function updateDisplay() {
+        resultDisplay.textContent = currentInput || "0";
+        expressionDisplay.textContent = expression;
+    }
+
+    function addNumber(number) {
+        if (currentInput === "Error") {
+            currentInput = "";
+        }
+
+        currentInput += number;
+        updateDisplay();
+    }
+
+    function addDecimal() {
+
+        let parts = currentInput.split(/[+\-*/]/);
+        let lastNumber = parts[parts.length - 1];
+
+        if (!lastNumber.includes(".")) {
+            currentInput += ".";
+        }
+
+        updateDisplay();
+    }
+
+    function addOperator(operator) {
+
+        if (currentInput === "" || currentInput === "Error") {
+            return;
+        }
+
+        let lastCharacter = currentInput.slice(-1);
+
+        if ("+-*/".includes(lastCharacter)) {
+            currentInput = currentInput.slice(0, -1);
+        }
+
+        currentInput += operator;
+        updateDisplay();
+    }
+
+    function clearCalculator() {
+        currentInput = "";
+        expression = "";
+        updateDisplay();
+    }
+
+    function deleteLast() {
+        currentInput = currentInput.slice(0, -1);
+        updateDisplay();
+    }
+
+    function percentage() {
+
+        if (currentInput === "") return;
+
+        let match = currentInput.match(/(\d+\.?\d*)$/);
+
+        if (match) {
+            let number = parseFloat(match[1]);
+            let percent = number / 100;
+
+            currentInput =
+                currentInput.slice(0, match.index) + percent;
+        }
+
+        updateDisplay();
+    }
+
+    function calculate() {
+
+        if (!currentInput) return;
+
+        try {
+
+            let safeExpression = currentInput;
+
+            let lastCharacter = safeExpression.slice(-1);
+
+            if ("+-*/".includes(lastCharacter)) {
+                safeExpression = safeExpression.slice(0, -1);
+            }
+
+            expression = currentInput;
+
+            let answer = Function(
+                '"use strict"; return (' + safeExpression + ')'
+            )();
+
+            if (!isFinite(answer)) {
+                throw new Error();
+            }
+
+            answer = Number.isInteger(answer)
+                ? answer
+                : Number(answer.toFixed(10));
+
+            currentInput = answer.toString();
+
+            addHistory(expression, answer);
+
+            updateDisplay();
+
+        } catch (error) {
+
+            currentInput = "Error";
+            expression = "";
+            updateDisplay();
+
+        }
+    }
+
+    function addHistory(exp, answer) {
+
+        const item = document.createElement("div");
+
+        item.className = "history-item";
+
+        item.innerHTML = `
+            <span>${formatExpression(exp)}</span>
+            <strong>${answer}</strong>
+        `;
+
+        historyList.prepend(item);
+
+        if (historyList.children.length > 10) {
+            historyList.removeChild(historyList.lastChild);
+        }
+    }
+
+    function clearHistory() {
+        historyList.innerHTML = "";
+    }
+
+    function formatExpression(exp) {
+        return exp
+            .replace(/\*/g, "×")
+            .replace(/\//g, "÷")
+            .replace(/-/g, "−");
+    }
+
+    function toggleTheme() {
+        document.body.classList.toggle("light");
+
+        const themeButton = document.querySelector(".theme");
+
+        if (document.body.classList.contains("light")) {
+            themeButton.textContent = "🌙";
+        } else {
+            themeButton.textContent = "☀";
+        }
+    }
+
+    /* Keyboard Support */
+
+    document.addEventListener("keydown", function(event) {
+
+        const key = event.key;
+
+        if (!isNaN(key)) {
+            addNumber(key);
+        }
+
+        else if (key === ".") {
+            addDecimal();
+        }
+
+        else if ("+-*/".includes(key)) {
+            addOperator(key);
+        }
+
+        else if (key === "Enter" || key === "=") {
+            calculate();
+        }
+
+        else if (key === "Backspace") {
+            deleteLast();
+        }
+
+        else if (key === "Escape") {
+            clearCalculator();
+        }
+
+        else if (key === "%") {
+            percentage();
+        }
+
+    });
+
+    updateDisplay();
+
+</script>
+
+</body>
+</html>
