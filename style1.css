@@ -1021,3 +1021,387 @@
                 transition-duration: .01ms !important;
             }
         }
+/* =========================================
+   MOBILE + TABLET RESPONSIVE
+========================================= */
+
+/* TABLET */
+@media (max-width: 900px) {
+
+    nav {
+        height: auto;
+        min-height: 75px;
+        padding: 15px 25px;
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+
+    .a1 {
+        font-size: 28px;
+    }
+
+    .a2 {
+        gap: 5px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .a2 li a {
+        font-size: 16px;
+        padding: 7px 10px;
+    }
+
+    .a2 li a:hover {
+        padding: 9px 15px;
+        font-size: 17px;
+    }
+
+    .a3 {
+        padding: 10px 16px;
+        font-size: 15px;
+    }
+
+    .b1 {
+        min-height: 580px;
+        padding: 70px 6%;
+    }
+
+    .b2 {
+        width: 100%;
+    }
+
+    .b3 {
+        font-size: 19px;
+    }
+
+    .b1 h1 {
+        font-size: 55px;
+    }
+
+    .b1 p {
+        width: 100%;
+        font-size: 18px;
+    }
+
+    .c3 {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .d1 {
+        flex-wrap: wrap;
+    }
+
+    .d1 > div {
+        width: 45%;
+        height: auto;
+        min-height: 380px;
+    }
+
+    .contact {
+        gap: 30px;
+        padding-left: 6%;
+        padding-right: 6%;
+    }
+
+    .contact-left,
+    .contact-map {
+        width: 50%;
+    }
+}
+
+
+/* MOBILE */
+@media (max-width: 600px) {
+
+    /* NAVBAR */
+    nav {
+        position: sticky;
+        top: 0;
+        width: 100%;
+        padding: 12px 15px;
+        min-height: auto;
+        justify-content: center;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .a1 {
+        font-size: 25px;
+    }
+
+    .a2 {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        gap: 4px;
+    }
+
+    .a2 li a {
+        font-size: 13px;
+        padding: 6px 8px;
+    }
+
+    .a2 li a:hover {
+        padding: 8px 10px;
+        font-size: 14px;
+    }
+
+    .a3 {
+        width: 100%;
+        max-width: 180px;
+        min-height: 42px;
+        padding: 9px 15px;
+        font-size: 14px;
+    }
+
+
+    /* HERO */
+    .b1 {
+        min-height: 550px;
+        padding: 60px 20px;
+    }
+
+    .b2 {
+        width: 100%;
+    }
+
+    .b3 {
+        font-size: 16px;
+        letter-spacing: 2px;
+    }
+
+    .b1 h1 {
+        font-size: 40px;
+        line-height: 1.15;
+    }
+
+    .b1 p {
+        width: 100%;
+        font-size: 16px;
+        line-height: 1.6;
+    }
+
+    .b4 {
+        width: 100%;
+        max-width: 220px;
+        padding: 13px 20px;
+        font-size: 16px;
+    }
+
+
+    /* ABOUT */
+    #c1 {
+        padding: 70px 20px;
+    }
+
+    .c2-title {
+        margin-bottom: 35px;
+    }
+
+    .c2-title h2 {
+        font-size: 30px;
+    }
+
+    .c3 {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .c3 div {
+        padding: 18px 0;
+    }
+
+    .c3 span {
+        font-size: 21px;
+    }
+
+    .c3 p {
+        font-size: 15px;
+        line-height: 1.5;
+    }
+
+
+    /* SKILLS */
+    .skills {
+        height: auto;
+        min-height: 500px;
+        padding: 60px 15px;
+        margin-top: 20px;
+    }
+
+    .skills h2 {
+        font-size: 32px;
+    }
+
+    .skill-box {
+        width: 140px;
+        padding: 20px 10px;
+        margin: 7px;
+    }
+
+
+    /* PROJECTS */
+    #d2 {
+        font-size: 32px;
+        padding: 60px 15px 30px;
+    }
+
+    .d1 {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 25px;
+        padding: 0 15px;
+    }
+
+    .d1 > div {
+        width: 100%;
+        max-width: 400px;
+        height: auto;
+        min-height: auto;
+        padding: 10px;
+    }
+
+    .d1 img {
+        width: 100%;
+        height: 180px;
+        object-fit: cover;
+    }
+
+    .d1 h3 {
+        font-size: 22px;
+    }
+
+    .d1 p {
+        font-size: 16px;
+        line-height: 1.5;
+    }
+
+
+    /* CONTACT */
+    .contact {
+        flex-direction: column;
+        width: 100%;
+        padding: 60px 15px;
+        gap: 30px;
+    }
+
+    .contact-left,
+    .contact-map {
+        width: 100%;
+    }
+
+    .contact h2 {
+        font-size: 38px;
+    }
+
+    .contact p {
+        font-size: 16px;
+        line-height: 1.5;
+    }
+
+    .contact form {
+        width: 100%;
+        padding: 18px;
+    }
+
+    .contact input,
+    .contact textarea {
+        font-size: 15px;
+        padding: 14px;
+    }
+
+    .contact textarea {
+        height: 120px;
+    }
+
+    .map-card {
+        padding: 12px;
+    }
+
+    .map-frame {
+        height: 280px;
+    }
+
+
+    /* FOOTER */
+    footer {
+        padding: 25px 15px;
+    }
+
+    .footer {
+        flex-direction: column;
+        text-align: center;
+        gap: 15px;
+    }
+
+    .icons {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 5px;
+    }
+
+    .icons a {
+        margin-left: 0;
+    }
+
+
+    /* WHATSAPP */
+    .whatsapp-btn {
+        right: 15px;
+        bottom: 15px;
+        width: 55px;
+        height: 55px;
+        min-width: 55px;
+        padding: 0;
+    }
+
+    .whatsapp-btn span {
+        display: none;
+    }
+
+    .whatsapp-btn i {
+        font-size: 27px;
+    }
+}
+
+
+/* VERY SMALL MOBILE */
+@media (max-width: 380px) {
+
+    .a1 {
+        font-size: 22px;
+    }
+
+    .a2 li a {
+        font-size: 11px;
+        padding: 5px 6px;
+    }
+
+    .a3 {
+        font-size: 13px;
+        max-width: 150px;
+    }
+
+    .b1 h1 {
+        font-size: 34px;
+    }
+
+    .b3 {
+        font-size: 14px;
+    }
+
+    .b1 p {
+        font-size: 14px;
+    }
+
+    .skill-box {
+        width: 125px;
+    }
+
+    .contact h2 {
+        font-size: 32px;
+    }
+}
